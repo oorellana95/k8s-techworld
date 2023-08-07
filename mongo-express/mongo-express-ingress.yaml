@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mongodb-express-ingress
+  namespace: mongodb-express-namespace
+spec:
+  rules:
+  # we can have multiple hosts with different subdomains
+  # http://analytics.myapp.com   http://finance.myapp.com
+  - host: mongodb-express.com
+    http:
+      paths:
+        # we can have different paths with different services
+        # http://myapp.com/analytics   http://myapp.com/finance
+        - path: "/"
+          pathType: Prefix
+          backend:
+            service:
+              name: mongodb-express-service
+              port:
+                number: 8081
+
